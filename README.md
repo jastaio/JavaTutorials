@@ -22,7 +22,7 @@ To get started with the tutorials, simply navigate to the folder of your desired
 
 ## Blog
 
-For more in-depth explanations and supplementary materials, visit my blog at [Jasta.io](https://jasta.io). There, you'll find accompanying articles, additional resources, and insights into Java programming and software development.
+For more in-depth explanations and supplementary materials, visit my blog at [jasta.io](https://jasta.io). There, you'll find accompanying articles, additional resources, and insights into Java programming and software development.
 
 ## Contributing
 
