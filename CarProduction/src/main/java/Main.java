@@ -1,7 +1,7 @@
 public class Main {
 
   public static void main(String[] args) {
-    Car audiA4 = new Car("Audi", "A5");
+    Car audiA4 = new Car("Audi", "A4");
 
     audiA4.setColor("green");
 
