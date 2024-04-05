@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Status defines the level of internal Log4j events that should be logged to the console.
+If there are any configuration problems without an obvious error you can set it to trace or other levels.
+Valid values are: off, trace, debug, info, warn, error, fatal, all
+-->
+<Configuration status="info">
+  <Properties>
+    <!-- The path of the log directory -->
+    <Property name="LOG_DIR">/logs</Property>
+  </Properties>
+
+  <Appenders>
+    <!--
+     name: The name of the appender
+     fileName: The name of the current log file
+     filePattern: The file names of any older log which is created if the current log size exceeds the SizeBasedTriggeringPolicy
+     immediateFlush: Log is written as soon as the log methods are called
+     -->
+    <RollingFile
+      name="fileLogger"
+      fileName="${LOG_DIR}/AppCurrent.log"
+      filePattern="${LOG_DIR}/App_%d{yyyy-MM-dd_hh-mm-ss}.log"
+      immediateFlush="true">
+      <PatternLayout>
+        <!--
+        The format of the log message inside the file
+        Example: 2024-04-04 18:57:29.369 [Bank.register] [INFO] WorldBank Germany - Customer 'Id' successfully registered!
+        -->
+        <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%C{1}.%M] [%level] %logger{36} - %msg%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <!-- Maximum size of the current log file -->
+        <SizeBasedTriggeringPolicy size="10MB"/>
+      </Policies>
+
+      <!-- Rollover strategy to delete old log files -->
+      <DefaultRolloverStrategy>
+        <!-- Search path for the deletion and depth (1 = just the search path not any subfolders, -1: search path with every subfolder, 2,3,4...: search path with x subfolders -->
+        <Delete basePath="${LOG_DIR}" maxDepth="1">
+          <!-- File name pattern for the old log files -->
+          <IfFileName glob="App_*.log"/>
+          <!-- Maximum amount of old log file -->
+          <IfAccumulatedFileCount exceeds="10"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+  </Appenders>
+
+  <Loggers>
+    <!--
+    The log level of the root logger which will be applied to the child logger.
+    With info log messages with .info, .error, .warn are logged - .debug for example will not get logged
+    Valid values are: off, trace, debug, info, warn, error, fatal, all
+    -->
+    <Root level="info">
+      <!-- Add the appender via its name -->
+      <AppenderRef ref="fileLogger"/>
+    </Root>
+  </Loggers>
+</Configuration>
