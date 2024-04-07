@@ -6,7 +6,10 @@ Valid values are: off, trace, debug, info, warn, error, fatal, all
 -->
 <Configuration status="info">
   <Properties>
-    <!-- The path of the log directory -->
+    <!-- 
+    The path of the log directory. With the configuration below, the log files are stored under 
+    <drive>:\logs
+    -->
     <Property name="LOG_DIR">/logs</Property>
   </Properties>
 
@@ -26,6 +29,7 @@ Valid values are: off, trace, debug, info, warn, error, fatal, all
         <!--
         The format of the log message inside the file
         Example: 2024-04-04 18:57:29.369 [Bank.register] [INFO] WorldBank Germany - Customer 'Id' successfully registered!
+        Definition: <Date with Time> [<ClassName>.<Method>] [<Message Log Level>] <LoggerName> - <Message>
         -->
         <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%C{1}.%M] [%level] %logger{36} - %msg%n</Pattern>
       </PatternLayout>
