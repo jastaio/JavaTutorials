@@ -30,38 +30,37 @@ class FileHelperTest {
   @Test
   void testFileWriter() {
     FileHelper.writeToFile(tempFile.getAbsolutePath(), String.join("\n", testContent));
-    List<String> fileContent = FileHelper.readFromFile(tempFile.getAbsolutePath());
-
-    assertEquals(2, fileContent.size());
-
-    for (int i = 0; i < testContent.size(); i++) {
-      assertEquals(testContent.get(i), fileContent.get(i));
-    }
+    checkReadResult(FileHelper.readFromFile(tempFile.getAbsolutePath()));
   }
 
   @Test
   void testBufferedFileWriter() {
     FileHelper.writeToFileBufferedWriter(tempFile.getAbsolutePath(),
         String.join("\n", testContent));
-    List<String> fileContent = FileHelper.readFromFileBufferedReader(tempFile.getAbsolutePath());
+    checkReadResult(FileHelper.readFromFileBufferedReader(tempFile.getAbsolutePath()));
+  }
 
-    assertEquals(2, fileContent.size());
+  private void checkReadResult(List<String> actualContent) {
+    assertEquals(testContent.size(), actualContent.size());
 
     for (int i = 0; i < testContent.size(); i++) {
-      assertEquals(testContent.get(i), fileContent.get(i));
+      assertEquals(testContent.get(i), actualContent.get(i));
     }
   }
 
   @Test
   void readFromFileError() {
-    assertThrows(RuntimeException.class, () -> FileHelper.readFromFile(tempDir.getAbsolutePath()),
-        "The file cannot be accessed!");
+    RuntimeException e = assertThrows(RuntimeException.class,
+        () -> FileHelper.readFromFile(tempDir.getAbsolutePath()),
+        "Exception was not thrown!");
+
+    assertEquals(e.getCause().getMessage(), "The file cannot be accessed!");
   }
 
   @Test
   void readFromFileBufferedReaderError() {
     assertThrows(RuntimeException.class,
         () -> FileHelper.readFromFileBufferedReader(tempDir.getAbsolutePath()),
-        "The file cannot be accessed!");
+        "Exception was not thrown!");
   }
 }
