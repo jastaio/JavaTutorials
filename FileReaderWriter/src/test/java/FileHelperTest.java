@@ -13,12 +13,11 @@ class FileHelperTest {
   @TempDir
   private File tempDir;
   private final String fileName = "tempFile.txt";
-  private File tempFile;
+  private File tempFile = new File(tempDir, fileName);;
   private final List<String> testContent = List.of("Hello World!", "This is a test.");
 
   @BeforeEach
   void setUp() throws IOException {
-    tempFile = new File(tempDir, fileName);
     tempFile.createNewFile();
   }
 
